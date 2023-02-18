@@ -1,14 +1,24 @@
 import matplotlib.pyplot as plt
+from numpy import ndarray
 from sklearn.metrics import precision_score, recall_score, confusion_matrix, ConfusionMatrixDisplay, accuracy_score, \
     f1_score
 
 from metrics.abstract_metric import AbstractMetric
+from scikitplot.metrics import plot_precision_recall
 
 
 class PrecisionMetric(AbstractMetric):
-    def calculate(self):
-        print("precision:", precision_score(self.y_true, self.y_pred))
+    name = "precision"
+    threshold = 0.9
+    description = "measures how many observations predicted as positive are in fact positive"
+    suggestion = "adjust the threshold for classifying positive cases, to make the model more conservative or liberal"
 
+    def calculate(self) -> float:
+        return precision_score(self.y_true, self.y_pred)
+
+    def suggestion_plot(self):
+        fig, ax = plt.subplots()
+        plot_precision_recall(self.y_true, self.y_pred, ax=ax)
 
 class RecallMetric(AbstractMetric):
     def calculate(self):
