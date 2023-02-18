@@ -1,57 +1,69 @@
 import matplotlib.pyplot as plt
-from numpy import ndarray
 from sklearn.metrics import precision_score, recall_score, confusion_matrix, ConfusionMatrixDisplay, accuracy_score, \
     f1_score
 
-
-def precision_metric(y_true: ndarray, y_pred: ndarray):
-    print("precision:", precision_score(y_true, y_pred))
+from metrics.abstract_metric import AbstractMetric
 
 
-def recall_metric(y_true: ndarray, y_pred: ndarray):
-    print("recall:", recall_score(y_true, y_pred))
+class PrecisionMetric(AbstractMetric):
+    def calculate(self):
+        print("precision:", precision_score(self.y_true, self.y_pred))
 
 
-def false_positive_rate(y_true: ndarray, y_pred: ndarray):
-    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
-    print("false positive rate:", fp / (fp + tn))
+class RecallMetric(AbstractMetric):
+    def calculate(self):
+        print("recall:", recall_score(self.y_true, self.y_pred))
 
 
-def false_negative_rate(y_true: ndarray, y_pred: ndarray):
-    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
-    print("false negative rate:", fn / (tp + fn))
+class FalsePositiveMetric(AbstractMetric):
+    def calculate(self):
+        tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
+        print("false positive rate:", fp / (fp + tn))
 
 
-def true_negative_rate(y_true: ndarray, y_pred: ndarray):
-    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
-    print("true negative rate:", tn / (tn + fp))
+class FalseNegativeMetric(AbstractMetric):
+    def calculate(self):
+        tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
+        print("false negative rate:", fn / (tp + fn))
 
 
-def negative_predictive_value(y_true: ndarray, y_pred: ndarray):
-    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
-    print("negative predictive value:", tn / (tn + fn))
+class TrueNegativeMetric(AbstractMetric):
+    def calculate(self):
+        tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
+        print("true negative rate:", tn / (tn + fp))
 
 
-def false_discovery_rate(y_true: ndarray, y_pred: ndarray):
-    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
-    print("false discovery rate:", fp / (tp + fp))
+class NegativePredictiveMetric(AbstractMetric):
+    def calculate(self):
+        tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
+        print("negative predictive value:", tn / (tn + fn))
 
 
-def true_positive_rate(y_true: ndarray, y_pred: ndarray):
-    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
-    print("true positive rate:", tp / (tp + fn))
+class FalseDiscoveryMetric(AbstractMetric):
+    def calculate(self):
+        tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
+        print("false discovery rate:", fp / (tp + fp))
 
 
-def accuracy(y_true: ndarray, y_pred: ndarray):
-    print("true positive rate:", accuracy_score(y_true, y_pred))
+class TruePositiveMetric(AbstractMetric):
+    def calculate(self):
+        tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
+        print("true positive rate:", tp / (tp + fn))
 
 
-def f1(y_true: ndarray, y_pred: ndarray):
-    print("f1 score:", f1_score(y_true, y_pred))
+class AccuracyMetric(AbstractMetric):
+    def calculate(self):
+        print("accuracy rate:", accuracy_score(self.y_true, self.y_pred))
 
 
-def confusion_metric(y_true: ndarray, y_pred: ndarray):
-    cm = confusion_matrix(y_true, y_pred)
-    disp = ConfusionMatrixDisplay(confusion_matrix=cm)
-    disp.plot()
-    plt.show()
+class F1Metric(AbstractMetric):
+    def calculate(self):
+        print("f1 score:", f1_score(self.y_true, self.y_pred))
+
+
+class ConfusionMetric(AbstractMetric):
+    def calculate(self):
+        cm = confusion_matrix(self.y_true, self.y_pred)
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+        disp.plot()
+        plt.show()

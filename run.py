@@ -1,6 +1,5 @@
 import numpy as np
-
-import eva as eva
+from eva import Eva
 
 
 def generate_y_true(true_samples=3000, false_samples=700):
@@ -24,4 +23,5 @@ def generate_y_pred(y_true: np.ndarray):
 y_true = generate_y_true()
 y_pred = generate_y_pred(y_true)
 
-eva.evaluate(y_true, y_pred)
+eva = Eva(y_true, y_pred)
+eva.evaluate()
