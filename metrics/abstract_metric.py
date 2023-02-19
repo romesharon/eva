@@ -12,6 +12,7 @@ class AbstractMetric(ABC):
     @abstractmethod
     def name(self):
         pass
+
     @property
     @abstractmethod
     def threshold(self):
@@ -30,8 +31,10 @@ class AbstractMetric(ABC):
     @abstractmethod
     def suggestion_plot(self):
         pass
+
     @abstractmethod
     def calculate(self) -> float:
         pass
 
-
+    def is_perform_well(self) -> bool:
+        return self.calculate() > self.threshold

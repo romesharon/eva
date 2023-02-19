@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from scikitplot.metrics import plot_precision_recall
 from sklearn import metrics
 from sklearn.metrics import precision_score, recall_score, confusion_matrix, ConfusionMatrixDisplay, accuracy_score, \
-    f1_score, roc_auc_score, roc_curve, precision_recall_curve
+    f1_score, roc_auc_score, mean_squared_error
 
 from metrics.abstract_metric import AbstractMetric
-from scikitplot.metrics import plot_precision_recall
 
 
 class AccuracyMetric(AbstractMetric):
@@ -103,6 +103,9 @@ class AUCMetric(AbstractMetric):
 
         return youdens_j
 
+    def is_perform_well(self) -> bool:
+        return self.threshold > 0.5
+
     def calculate(self) -> float:
         return roc_auc_score(self.y_true, self.y_pred, multi_class='ovr')
 
@@ -140,47 +143,23 @@ class MCCMetric(AbstractMetric):
         return numerator / denominator
 
 
-# class FalsePositiveMetric(AbstractMetric):
-#     name= "false positive rate"
-#     def calculate(self) -> float:
-#         tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
-#         print("false positive rate:", fp / (fp + tn))
-#
+class MSEMetric(AbstractMetric):
+    name = "Mean Squared Error (MSE)"
+    description = "Mean Squared Error (MSE) is a popular regression metric which measures the average squared " \
+                  "difference between the true and predicted values. "
+    suggestion = "Lower the Mean Squared Error (MSE) value by tuning model hyperparameters or adjusting the training " \
+                 "data."
 
-# class FalseNegativeMetric(AbstractMetric):
-#     def calculate(self):
-#         tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
-#         print("false negative rate:", fn / (tp + fn))
-#
+    @property
+    def threshold(self) -> float:
+        var = np.var(self.y_true)
+        return float(var)
 
-# class TrueNegativeMetric(AbstractMetric):
-#     def calculate(self):
-#         tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
-#         print("true negative rate:", tn / (tn + fp))
-#
-#
-# class NegativePredictiveMetric(AbstractMetric):
-#     def calculate(self):
-#         tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
-#         print("negative predictive value:", tn / (tn + fn))
+    def suggestion_plot(self):
+        pass
 
+    def is_perform_well(self) -> bool:
+        return self.calculate() < self.threshold
 
-# class FalseDiscoveryMetric(AbstractMetric):
-#     def calculate(self):
-#         tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
-#         print("false discovery rate:", fp / (tp + fp))
-#
-#
-# class TruePositiveMetric(AbstractMetric):
-#     def calculate(self):
-#         tn, fp, fn, tp = confusion_matrix(self.y_true, self.y_pred).ravel()
-#         print("true positive rate:", tp / (tp + fn))
-#
-
-
-class ConfusionMetric(AbstractMetric):
-    def calculate(self):
-        cm = confusion_matrix(self.y_true, self.y_pred)
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm)
-        disp.plot()
-        plt.show()
+    def calculate(self) -> float:
+        return mean_squared_error(self.y_true, self.y_pred)

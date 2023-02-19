@@ -1,2 +1,2 @@
-from metrics.metrics import PrecisionMetric, RecallMetric, AccuracyMetric, ConfusionMetric, F1Metric, \
+from metrics.metrics import PrecisionMetric, RecallMetric, AccuracyMetric, F1Metric, \
 ConfusionMatrixDisplay

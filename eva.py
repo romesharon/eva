@@ -1,6 +1,6 @@
 from numpy import ndarray
 
-from metrics import PrecisionMetric, RecallMetric, AccuracyMetric, ConfusionMetric, F1Metric
+from metrics import PrecisionMetric, RecallMetric, AccuracyMetric, F1Metric
 
 
 class Eva:
@@ -11,8 +11,7 @@ class Eva:
 
         accuracy_metric = AccuracyMetric(y_true, y_pred)
         f1_metric = F1Metric(y_true, y_pred)
-        confusion_metric = ConfusionMetric(y_true, y_pred)
-        self.metrics = [precision_metric, recall_metric, confusion_metric]
+        self.metrics = [precision_metric, recall_metric]
 
     def evaluate(self):
         for metric in self.metrics:
