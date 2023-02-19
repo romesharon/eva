@@ -1,5 +1,6 @@
 import numpy as np
 from eva import Eva
+from metrics import AccuracyMetric
 
 
 def generate_y_true(true_samples=3000, false_samples=700):
@@ -23,5 +24,9 @@ def generate_y_pred(y_true: np.ndarray):
 y_true = generate_y_true()
 y_pred = generate_y_pred(y_true)
 
-eva = Eva(y_true, y_pred)
-eva.evaluate()
+# eva = Eva(y_true, y_pred)
+# eva.evaluate()
+
+true_positive_metric = AccuracyMetric(y_true, y_pred)
+true_positive_metric.suggestion_plot()
+
