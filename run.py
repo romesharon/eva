@@ -25,16 +25,8 @@ def generate_y_pred(y_true: np.ndarray):
 y_true = generate_y_true()
 y_pred = generate_y_pred(y_true)
 
-# eva = Eva(y_true, y_pred)
-# eva.evaluate()
-true_positive_metric = AccuracyMetric(y_true, y_pred)
-print(true_positive_metric.calculate())
+eva = Eva(y_true, y_pred)
+eva.evaluate()
 
-
-true_positive_metric = AUCMetric(y_true, y_pred)
-true_positive_metric.suggestion_plot()
-print(true_positive_metric.calculate())
-print(true_positive_metric.threshold)
-# print(true_positive_metric.is_perform_well())
 
 
