@@ -1,10 +1,9 @@
 import numpy as np
+
 from eva import Eva
-from metrics import AccuracyMetric, F1Metric
-from metrics.metrics import AUCMetric, MCCMetric, MSEMetric
 
 
-def generate_y_true(true_samples=3000, false_samples=700):
+def generate_y_true(true_samples=3000, false_samples=700) -> np.ndarray:
     true = np.random.randint(1, 2, size=true_samples)
     false = np.random.randint(1, size=false_samples)
     y_true = np.concatenate((false, true), axis=None)
@@ -12,7 +11,7 @@ def generate_y_true(true_samples=3000, false_samples=700):
     return y_true
 
 
-def generate_y_pred(y_true: np.ndarray):
+def generate_y_pred(y_true: np.ndarray) -> np.ndarray:
     true = np.random.randint(1, 2, size=int(y_true.size * 0.8))
     false = np.random.randint(1, size=int(y_true.size * 0.2))
     choice = np.concatenate((false, true), axis=None)
@@ -24,9 +23,7 @@ def generate_y_pred(y_true: np.ndarray):
 
 y_true = generate_y_true()
 y_pred = generate_y_pred(y_true)
+y_prob = np.zeros(len(y_true))
 
-eva = Eva(y_true, y_pred)
+eva = Eva(y_true, y_pred, y_prob)
 eva.evaluate()
-
-
-

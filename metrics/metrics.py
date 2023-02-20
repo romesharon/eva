@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from scikitplot.metrics import plot_precision_recall
+# from scikitplot.metrics import plot_precision_recall
 from sklearn import metrics
 from sklearn.metrics import precision_score, recall_score, confusion_matrix, ConfusionMatrixDisplay, accuracy_score, \
-    f1_score, roc_auc_score, mean_squared_error
+    f1_score, roc_auc_score, mean_squared_error, brier_score_loss
 
 from metrics.abstract_metric import AbstractMetric
 
@@ -37,7 +37,7 @@ class PrecisionMetric(AbstractMetric):
 
     def suggestion_plot(self):
         fig, ax = plt.subplots()
-        plot_precision_recall(self.y_true, self.y_pred, ax=ax)
+        # plot_precision_recall(self.y_true, self.y_pred, ax=ax)
 
 
 class RecallMetric(AbstractMetric):
@@ -165,3 +165,23 @@ class MSEMetric(AbstractMetric):
 
     def calculate(self) -> float:
         return mean_squared_error(self.y_true, self.y_pred)
+
+
+class BrierMetric(AbstractMetric):
+    name = "Brier Score"
+    description = "Brier score is an evaluation metric that is used to check the goodness of a predicted probability " \
+                  "score. This is very similar to the mean squared error, but only applied for prediction probability " \
+                  "scores, whose values range between 0 and 1. "
+    suggestion = ""
+    threshold = 0.3
+
+    def suggestion_plot(self):
+        pass
+
+    def is_perform_well(self) -> bool:
+        return self.calculate() < self.threshold
+
+    def calculate(self) -> float:
+        losses = np.subtract(self.y_true, self.y_prob) ** 2
+        brier_score = losses.sum() / len(self.y_true)
+        return brier_score

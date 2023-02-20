@@ -4,9 +4,10 @@ from numpy import ndarray
 
 
 class AbstractMetric(ABC):
-    def __init__(self, y_true: ndarray, y_pred: ndarray):
+    def __init__(self, y_true: ndarray, y_pred: ndarray, y_prob: ndarray = None):
         self.y_true = y_true
         self.y_pred = y_pred
+        self.y_prob = y_prob
 
     @property
     @abstractmethod
