@@ -3,14 +3,15 @@ import numpy as np
 # from scikitplot.metrics import plot_precision_recall
 from sklearn import metrics
 from sklearn.metrics import precision_score, recall_score, confusion_matrix, ConfusionMatrixDisplay, accuracy_score, \
-    f1_score, roc_auc_score, mean_squared_error, brier_score_loss
+    f1_score, roc_auc_score, mean_squared_error
 
+from constants import Sensitivity
 from metrics.abstract_metric import AbstractMetric
 
 
 class AccuracyMetric(AbstractMetric):
     name = "accuracy"
-    threshold = 0.9
+    threshold = {Sensitivity.LOW: 0.7, Sensitivity.MEDIUM: 0.8, Sensitivity.HIGH: 0.9}
     description = "Accuracy calculates the proportion of correct predictions out of all the predictions made by the " \
                   "model "
     suggestion = "Try to use a more complex model or to add more data to the training set"
@@ -27,7 +28,7 @@ class AccuracyMetric(AbstractMetric):
 
 class PrecisionMetric(AbstractMetric):
     name = "precision"
-    threshold = 0.9
+    threshold = {Sensitivity.LOW: 0.7, Sensitivity.MEDIUM: 0.8, Sensitivity.HIGH: 0.9}
     description = "Precision measures how many observations predicted as positive are in fact positive"
     suggestion = "Try to adjust the threshold for classifying positive cases, to make the model more conservative or " \
                  "liberal"
@@ -42,7 +43,7 @@ class PrecisionMetric(AbstractMetric):
 
 class RecallMetric(AbstractMetric):
     name = "recall"
-    threshold = 0.9
+    threshold = {Sensitivity.LOW: 0.7, Sensitivity.MEDIUM: 0.8, Sensitivity.HIGH: 0.9}
     description = "recall calculates the proportion of true positive predictions out of all the actual positive instances"
     suggestion = "Try to adjust the threshold for classifying positive cases, to make the model more conservative or " \
                  "liberal"
@@ -56,7 +57,7 @@ class RecallMetric(AbstractMetric):
 
 class F1Metric(AbstractMetric):
     name = "F1 score"
-    threshold = 0.9
+    threshold = {Sensitivity.LOW: 0.7, Sensitivity.MEDIUM: 0.8, Sensitivity.HIGH: 0.9}
     description = "F1 score is an harmonic mean of precision and recall. It is commonly used when the dataset is " \
                   "imbalanced. "
     suggestion = "try to use oversampling or undersampling techniques to balance the dataset"
@@ -127,7 +128,7 @@ class AUCMetric(AbstractMetric):
 
 class MCCMetric(AbstractMetric):
     name = "Matthew's Correlation Coefficient (MCC)"
-    threshold = 0.3
+    threshold = {Sensitivity.LOW: 0.2, Sensitivity.MEDIUM: 0.3, Sensitivity.HIGH: 0.4}
     description = "Matthew's Correlation Coefficient (MCC) measures the quality of a binary classification by taking " \
                   "into account true positives, true negatives, false positives, and false negatives and it is " \
                   "commonly used when the dataset is imbalanced. A high value for MCC (close to 1) indicates good " \
@@ -173,13 +174,13 @@ class BrierMetric(AbstractMetric):
                   "score. This is very similar to the mean squared error, but only applied for prediction probability " \
                   "scores, whose values range between 0 and 1. "
     suggestion = ""
-    threshold = 0.3
+    threshold = {Sensitivity.LOW: 0.2, Sensitivity.MEDIUM: 0.3, Sensitivity.HIGH: 0.4}
 
     def suggestion_plot(self):
         pass
 
     def is_perform_well(self) -> bool:
-        return self.calculate() < self.threshold
+        return self.calculate() < self.threshold.get(self.sensitivity)
 
     def calculate(self) -> float:
         losses = np.subtract(self.y_true, self.y_prob) ** 2
