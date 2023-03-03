@@ -1,5 +1,4 @@
 import numpy as np
-
 from src.eva.eva import Eva
 
 
