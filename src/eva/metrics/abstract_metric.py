@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from numpy import ndarray
 
-from constants import Sensitivity
+from src.eva.constants import Sensitivity
 
 
 class AbstractMetric(ABC):
