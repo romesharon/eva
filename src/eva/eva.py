@@ -1,8 +1,8 @@
 from numpy import ndarray
 from scipy.stats import ttest_ind
 
-from constants import Sensitivity
-from metrics import PrecisionMetric, RecallMetric, AccuracyMetric, F1Metric, AUCMetric, MCCMetric, MSEMetric, \
+from src.eva.constants import Sensitivity
+from src.eva.metrics import PrecisionMetric, RecallMetric, AccuracyMetric, F1Metric, AUCMetric, MCCMetric, MSEMetric, \
     BrierMetric
 
 

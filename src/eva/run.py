@@ -1,6 +1,5 @@
 import numpy as np
-
-from eva import Eva
+from src.eva.eva import Eva
 
 
 def generate_y_true(true_samples=3000, false_samples=700) -> np.ndarray:
