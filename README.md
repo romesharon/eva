@@ -7,16 +7,17 @@ Installation
 ------------
 
 To install Eva, you can use pip:
-
-`pip install eva`
+```python
+pip install eva
+```
 
 Usage
 -----
 
 Here's an example of how to use Eva to evaluate the performance of a binary classification model:
 
-
-`from eva import Eva
+```python
+from eva import Eva
 
 # Example y_true, y_pred, and y_prob
 y_true = [0, 1, 1, 0, 1, 0, 1, 0]
@@ -26,3 +27,4 @@ y_prob = [0.1, 0.4, 0.6, 0.7, 0.8, 0.3, 0.2, 0.5]
 # Create an Eva object and evaluate the model
 eva = Eva(y_true, y_pred, y_prob)
 eva.evaluate()
+```
