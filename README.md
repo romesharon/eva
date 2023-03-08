@@ -28,3 +28,32 @@ y_prob = [0.1, 0.4, 0.6, 0.7, 0.8, 0.3, 0.2, 0.5]
 eva = Eva(y_true, y_pred, y_prob)
 eva.evaluate()
 ```
+By default, `Eva` will evaluate the model using the following metrics:
+
+-   Precision
+-   Recall
+-   Accuracy
+-   F1 score
+-   AUC ROC
+-   MCC
+-   Mean squared error (MSE)
+-   Brier score
+
+Sensitivity
+-----
+
+You can also pass a sensitivity level to `Eva` to customize the evaluation based on your needs. There are three sensitivity levels to choose from: LOW, MEDIUM, and HIGH. By default, the sensitivity level is set to MEDIUM.
+
+To specify a sensitivity level, simply pass it as a string to the `sensitivity` parameter when creating an instance of `Eva`:
+
+
+```python
+from eva import Eva
+
+y_true = [0, 1, 0, 1, 0]
+y_pred = [0, 1, 1, 1, 0]
+y_prob = [0.2, 0.7, 0.6, 0.8, 0.3]
+
+eva = Eva(y_true, y_pred, y_prob, sensitivity="high")
+eva.evaluate()
+```
