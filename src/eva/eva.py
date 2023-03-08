@@ -7,33 +7,22 @@ from src.eva.metrics import PrecisionMetric, RecallMetric, AccuracyMetric, F1Met
 
 
 class Eva:
-    def __init__(self, y_true_test: ndarray, y_pred_test: ndarray, y_true_train: ndarray, y_pred_train: ndarray,
+    def __init__(self, y_true: ndarray, y_pred_: ndarray,
                  y_prob=None, sensitivity: Sensitivity = Sensitivity.MEDIUM):
-        self.y_pred_train = y_pred_train
-        self.y_pred_test = y_pred_test
-        self.test_metrics = {
-            "precision_metric": PrecisionMetric(y_true_test, y_pred_test, sensitivity),
-            "recall_metric": RecallMetric(y_true_test, y_pred_test, sensitivity),
-            "accuracy_metric": AccuracyMetric(y_true_test, y_pred_test, sensitivity),
-            "f1_metric": F1Metric(y_true_test, y_pred_test, sensitivity),
-            "auc_metric": AUCMetric(y_true_test, y_pred_test, sensitivity),
-            "mcc_metric": MCCMetric(y_true_test, y_pred_test, sensitivity),
-            "mse_metric": MSEMetric(y_true_test, y_pred_test, sensitivity),
-            "brier_metric": BrierMetric(y_true_test, y_pred_test, sensitivity, y_prob),
-        }
-        self.train_metrics = {
-            "precision_metric": PrecisionMetric(y_true_train, y_pred_train, sensitivity),
-            "recall_metric": RecallMetric(y_true_train, y_pred_train, sensitivity),
-            "accuracy_metric": AccuracyMetric(y_true_train, y_pred_train, sensitivity),
-            "f1_metric": F1Metric(y_true_train, y_pred_train, sensitivity),
-            "auc_metric": AUCMetric(y_true_train, y_pred_train, sensitivity),
-            "mcc_metric": MCCMetric(y_true_train, y_pred_train, sensitivity),
-            "mse_metric": MSEMetric(y_true_train, y_pred_train, sensitivity),
-            "brier_metric": BrierMetric(y_true_train, y_pred_train, sensitivity, y_prob),
+        self.y_pred_test = y_pred_
+        self.metrics = {
+            # "precision_metric": PrecisionMetric(y_true, y_pred_, sensitivity),
+            "recall_metric": RecallMetric(y_true, y_pred_, sensitivity),
+            # "accuracy_metric": AccuracyMetric(y_true, y_pred_, sensitivity),
+            # "f1_metric": F1Metric(y_true, y_pred_, sensitivity),
+            # "auc_metric": AUCMetric(y_true, y_pred_, sensitivity),
+            # "mcc_metric": MCCMetric(y_true, y_pred_, sensitivity),
+            # "mse_metric": MSEMetric(y_true, y_pred_, sensitivity),
+            # "brier_metric": BrierMetric(y_true, y_pred_, sensitivity, y_prob),
         }
 
     def evaluate(self):
-        for metric in self.test_metrics.values():
+        for metric in self.metrics.values():
             if not metric.is_perform_well():
                 print(f"The metric {metric.name} not perform well")
                 print(metric.description)

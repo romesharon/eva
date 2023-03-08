@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
-# from scikitplot.metrics import plot_precision_recall
+
 from sklearn import metrics
 from sklearn.metrics import precision_score, recall_score, confusion_matrix, ConfusionMatrixDisplay, accuracy_score, \
-    f1_score, roc_auc_score, mean_squared_error
+    f1_score, roc_auc_score, mean_squared_error, PrecisionRecallDisplay
 
 from src.eva.constants import Sensitivity
 from src.eva.metrics.abstract_metric import AbstractMetric
@@ -11,7 +11,7 @@ from src.eva.metrics.abstract_metric import AbstractMetric
 
 class AccuracyMetric(AbstractMetric):
     name = "accuracy"
-    threshold = {Sensitivity.LOW: 0.7, Sensitivity.MEDIUM: 0.8, Sensitivity.HIGH: 0.9}
+    threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
     description = "Accuracy calculates the proportion of correct predictions out of all the predictions made by the " \
                   "model "
     suggestion = "Try to use a more complex model or to add more data to the training set"
@@ -28,7 +28,7 @@ class AccuracyMetric(AbstractMetric):
 
 class PrecisionMetric(AbstractMetric):
     name = "precision"
-    threshold = {Sensitivity.LOW: 0.7, Sensitivity.MEDIUM: 0.8, Sensitivity.HIGH: 0.9}
+    threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
     description = "Precision measures how many observations predicted as positive are in fact positive"
     suggestion = "Try to adjust the threshold for classifying positive cases, to make the model more conservative or " \
                  "liberal"
@@ -37,13 +37,15 @@ class PrecisionMetric(AbstractMetric):
         return precision_score(self.y_true, self.y_pred)
 
     def suggestion_plot(self):
-        fig, ax = plt.subplots()
-        # plot_precision_recall(self.y_true, self.y_pred, ax=ax)
+        display = PrecisionRecallDisplay.from_predictions(self.y_true, self.y_pred)
+        display.plot()
+
+        _ = display.ax_.set_title("Binary classifcation Precision-Recall curve")
 
 
 class RecallMetric(AbstractMetric):
     name = "recall"
-    threshold = {Sensitivity.LOW: 0.7, Sensitivity.MEDIUM: 0.8, Sensitivity.HIGH: 0.9}
+    threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
     description = "recall calculates the proportion of true positive predictions out of all the actual positive instances"
     suggestion = "Try to adjust the threshold for classifying positive cases, to make the model more conservative or " \
                  "liberal"
@@ -52,7 +54,10 @@ class RecallMetric(AbstractMetric):
         return recall_score(self.y_true, self.y_pred)
 
     def suggestion_plot(self):
-        pass
+        display = PrecisionRecallDisplay.from_predictions(self.y_true, self.y_pred)
+        display.plot()
+
+        _ = display.ax_.set_title("Binary classifcation Precision-Recall curve")
 
 
 class F1Metric(AbstractMetric):
