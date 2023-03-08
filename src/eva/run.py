@@ -2,7 +2,7 @@ import numpy as np
 from src.eva.eva import Eva
 
 
-def generate_y_true(true_samples=3000, false_samples=700) -> np.ndarray:
+def generate_y_true(true_samples=20000, false_samples=3000) -> np.ndarray:
     true = np.random.randint(1, 2, size=true_samples)
     false = np.random.randint(1, size=false_samples)
     y_true = np.concatenate((false, true), axis=None)
@@ -11,8 +11,8 @@ def generate_y_true(true_samples=3000, false_samples=700) -> np.ndarray:
 
 
 def generate_y_pred(y_true: np.ndarray) -> np.ndarray:
-    true = np.random.randint(1, 2, size=int(y_true.size * 0.2))
-    false = np.random.randint(1, size=int(y_true.size * 0.9))
+    true = np.random.randint(1, 2, size=int(y_true.size * 0.4))
+    false = np.random.randint(1, size=int(y_true.size * 0.3))
     choice = np.concatenate((false, true), axis=None)
     np.random.shuffle(choice)
     y_pred = np.array(y_true)

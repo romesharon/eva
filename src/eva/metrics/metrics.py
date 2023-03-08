@@ -72,7 +72,7 @@ class F1Metric(AbstractMetric):
 
     def suggestion_plot(self):
         labels = ['Class 0', 'Class 1']
-        plt.bar(labels, self.calculate())
+        plt.bar(labels, [f1_score(self.y_true, self.y_pred, pos_label=0), f1_score(self.y_true, self.y_pred, pos_label=1)])
         plt.title('F1 score per class')
         plt.xlabel('Class')
         plt.ylabel('F1 score')
