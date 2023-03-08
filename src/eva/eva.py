@@ -11,14 +11,14 @@ class Eva:
                  y_prob=None, sensitivity: Sensitivity = Sensitivity.MEDIUM):
         self.y_pred_test = y_pred_
         self.metrics = {
-            # "precision_metric": PrecisionMetric(y_true, y_pred_, sensitivity),
+            "precision_metric": PrecisionMetric(y_true, y_pred_, sensitivity),
             "recall_metric": RecallMetric(y_true, y_pred_, sensitivity),
-            # "accuracy_metric": AccuracyMetric(y_true, y_pred_, sensitivity),
-            # "f1_metric": F1Metric(y_true, y_pred_, sensitivity),
-            # "auc_metric": AUCMetric(y_true, y_pred_, sensitivity),
-            # "mcc_metric": MCCMetric(y_true, y_pred_, sensitivity),
-            # "mse_metric": MSEMetric(y_true, y_pred_, sensitivity),
-            # "brier_metric": BrierMetric(y_true, y_pred_, sensitivity, y_prob),
+            "accuracy_metric": AccuracyMetric(y_true, y_pred_, sensitivity),
+            "f1_metric": F1Metric(y_true, y_pred_, sensitivity),
+            "auc_metric": AUCMetric(y_true, y_pred_, sensitivity),
+            "mcc_metric": MCCMetric(y_true, y_pred_, sensitivity),
+            "mse_metric": MSEMetric(y_true, y_pred_, sensitivity),
+            "brier_metric": BrierMetric(y_true, y_pred_, sensitivity, y_prob),
         }
 
     def evaluate(self):
