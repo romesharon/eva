@@ -62,7 +62,7 @@ class RecallMetric(AbstractMetric):
 
 class F1Metric(AbstractMetric):
     name = "F1 score"
-    threshold = {Sensitivity.LOW: 0.7, Sensitivity.MEDIUM: 0.8, Sensitivity.HIGH: 0.9}
+    threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
     description = "F1 score is an harmonic mean of precision and recall. It is commonly used when the dataset is " \
                   "imbalanced. "
     suggestion = "try to use oversampling or undersampling techniques to balance the dataset"
@@ -84,6 +84,8 @@ class AUCMetric(AbstractMetric):
     description = "AUC (Area Under the ROC Curve) calculates the area under the ROC curve, which plots the true " \
                   "positive rate against the false positive rate, the closer to 1, the better. A score of 0.5 is " \
                   "equivalent to random guessing. "
+    threshold = {Sensitivity.LOW: 0.55, Sensitivity.MEDIUM: 0.5, Sensitivity.HIGH: 0.45}
+
     suggestion = "try to use a different algorithm or to add more data to the training set"
 
     @property
@@ -112,7 +114,7 @@ class AUCMetric(AbstractMetric):
         return youdens_j
 
     def is_perform_well(self) -> bool:
-        return self.threshold > 0.5
+        return self.threshold > self.sensitivity
 
     def calculate(self) -> float:
         return roc_auc_score(self.y_true, self.y_pred, multi_class='ovr')
