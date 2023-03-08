@@ -65,7 +65,7 @@ class F1Metric(AbstractMetric):
     threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
     description = "F1 score is an harmonic mean of precision and recall. It is commonly used when the dataset is " \
                   "imbalanced. "
-    suggestion = "try to use oversampling or undersampling techniques to balance the dataset"
+    suggestion = "Try to use oversampling or undersampling techniques to balance the dataset"
 
     def calculate(self) -> float:
         return f1_score(self.y_true, self.y_pred)
@@ -86,10 +86,11 @@ class AUCMetric(AbstractMetric):
                   "equivalent to random guessing. "
     threshold = {Sensitivity.LOW: 0.55, Sensitivity.MEDIUM: 0.5, Sensitivity.HIGH: 0.45}
 
-    suggestion = "try to use a different algorithm or to add more data to the training set"
+    suggestion = "Try to use a different algorithm or to add more data to the training set, in addition, you can try " \
+                 "to adjust the model threshold "
 
     @property
-    def threshold(self) -> float:
+    def threshold_calculate(self) -> float:
         def perf_measure(y_actual, y_hat):
             TP = 0
             FP = 0
@@ -114,13 +115,13 @@ class AUCMetric(AbstractMetric):
         return youdens_j
 
     def is_perform_well(self) -> bool:
-        return self.threshold > self.sensitivity
+        return self.threshold_calculate > self.threshold.get(self.sensitivity)
 
     def calculate(self) -> float:
         return roc_auc_score(self.y_true, self.y_pred, multi_class='ovr')
 
     def suggestion_plot(self):
-        fpr, tpr, _ = metrics.roc_curve(self.y_true, self.y_pred)
+        fpr, tpr, _ = metrics.roc_curve(self.y_true, self.y_prob)
         roc_auc = metrics.auc(fpr, tpr)
         plt.plot(fpr, tpr, lw=2, label='ROC curve (AUC = %0.2f)' % roc_auc)
         plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
@@ -128,19 +129,18 @@ class AUCMetric(AbstractMetric):
         plt.ylim([0.0, 1.05])
         plt.xlabel('False Positive Rate')
         plt.ylabel('True Positive Rate')
-        plt.title('Receiver operating characteristic')
         plt.legend(loc="lower right")
         plt.show()
 
 
 class MCCMetric(AbstractMetric):
     name = "Matthew's Correlation Coefficient (MCC)"
-    threshold = {Sensitivity.LOW: 0.2, Sensitivity.MEDIUM: 0.3, Sensitivity.HIGH: 0.4}
+    threshold = {Sensitivity.LOW: 0.3, Sensitivity.MEDIUM: 0.35, Sensitivity.HIGH: 0.4}
     description = "Matthew's Correlation Coefficient (MCC) measures the quality of a binary classification by taking " \
                   "into account true positives, true negatives, false positives, and false negatives and it is " \
                   "commonly used when the dataset is imbalanced. A high value for MCC (close to 1) indicates good " \
                   "performance, while a low value (close to 0 or below) indicates poor performance. "
-    suggestion = "To improve performance, try adjusting the threshold of the classifier or consider modifying the " \
+    suggestion = "Try adjusting the threshold of the classifier or consider modifying the " \
                  "feature set."
 
     def suggestion_plot(self):
@@ -177,11 +177,12 @@ class MSEMetric(AbstractMetric):
 
 class BrierMetric(AbstractMetric):
     name = "Brier Score"
-    description = "Brier score is an evaluation metric that is used to check the goodness of a predicted probability " \
+    description = "Brier score is used to check the goodness of a predicted probability " \
                   "score. This is very similar to the mean squared error, but only applied for prediction probability " \
                   "scores, whose values range between 0 and 1. "
-    suggestion = ""
-    threshold = {Sensitivity.LOW: 0.2, Sensitivity.MEDIUM: 0.3, Sensitivity.HIGH: 0.4}
+    suggestion = "Try adjusting the model's hyperparameters, such as the regularization strength, " \
+                 "or using a different algorithm that is better suited to the data, increasing the amount of data or improving the quality of the input features may also help to improve the model's performance. Finally, ensemble methods, such as bagging or boosting, could be used to combine multiple models and improve the overall performance."
+    threshold = {Sensitivity.LOW: 0.18, Sensitivity.MEDIUM: 0.15, Sensitivity.HIGH: 0.1}
 
     def suggestion_plot(self):
         pass

@@ -6,7 +6,7 @@ from src.eva.constants import Sensitivity
 
 
 class AbstractMetric(ABC):
-    def __init__(self, y_true: ndarray, y_pred: ndarray, sensitivity: Sensitivity, y_prob: ndarray = None):
+    def __init__(self, y_true: ndarray, y_pred: ndarray,  y_prob: ndarray = None, sensitivity: Sensitivity = Sensitivity.MEDIUM):
         self.y_true = y_true
         self.y_pred = y_pred
         self.y_prob = y_prob
