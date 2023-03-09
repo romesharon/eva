@@ -41,4 +41,4 @@ class AbstractMetric(ABC):
         pass
 
     def is_perform_well(self) -> bool:
-        return self.calculate() < self.threshold.get(self.sensitivity)
+        return self.calculate() > self.threshold.get(self.sensitivity)
