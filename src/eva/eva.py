@@ -15,10 +15,10 @@ class Eva:
             "recall_metric": RecallMetric(y_true, y_pred_, y_prob, sensitivity),
             "accuracy_metric": AccuracyMetric(y_true, y_pred_, y_prob, sensitivity),
             "f1_metric": F1Metric(y_true, y_pred_, y_prob, sensitivity),
-            "auc_metric": AUCMetric(y_true, y_pred_,y_prob,  sensitivity),
             "mcc_metric": MCCMetric(y_true, y_pred_, y_prob, sensitivity),
             "mse_metric": MSEMetric(y_true, y_pred_, y_prob, sensitivity),
-            "brier_metric": BrierMetric(y_true, y_pred_, y_prob, sensitivity)
+            "brier_metric": BrierMetric(y_true, y_pred_, y_prob, sensitivity),
+            "auc_metric": AUCMetric(y_true, y_pred_, y_prob, sensitivity)
         }
 
     def evaluate(self):
