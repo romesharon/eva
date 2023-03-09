@@ -92,20 +92,20 @@ class AUCMetric(AbstractMetric):
 
     @property
     def threshold_calculate(self) -> float:
-        def perf_measure(y_actual, y_hat):
+        def perf_measure(y_actuals, y_hats):
             TP = 0
             FP = 0
             TN = 0
             FN = 0
 
-            for i in range(len(y_hat)):
-                if y_actual[i] == y_hat[i] == 1:
+            for y_actual, y_hat in zip(y_actuals, y_hats):
+                if y_actual == y_hat == 1:
                     TP += 1
-                if y_hat[i] == 1 and y_actual[i] != y_hat[i]:
+                if y_hat == 1 and y_actual != y_hat:
                     FP += 1
-                if y_actual[i] == y_hat[i] == 0:
+                if y_actual == y_hat == 0:
                     TN += 1
-                if y_hat[i] == 0 and y_actual[i] != y_hat[i]:
+                if y_hat == 0 and y_actual != y_hat:
                     FN += 1
 
             return TP, FP, TN, FN
