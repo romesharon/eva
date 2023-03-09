@@ -3,7 +3,7 @@ import numpy as np
 
 from sklearn import metrics
 from sklearn.metrics import precision_score, recall_score, confusion_matrix, ConfusionMatrixDisplay, accuracy_score, \
-    f1_score, roc_auc_score, mean_squared_error, PrecisionRecallDisplay
+    f1_score, roc_auc_score, mean_squared_error, PrecisionRecallDisplay, brier_score_loss
 
 from src.eva.constants import Sensitivity
 from src.eva.metrics.abstract_metric import AbstractMetric
@@ -195,6 +195,7 @@ class BrierMetric(AbstractMetric):
         return self.calculate() < self.threshold.get(self.sensitivity)
 
     def calculate(self) -> float:
-        losses = np.subtract(self.y_true, self.y_prob) ** 2
-        brier_score = losses.sum() / len(self.y_true)
-        return brier_score
+        return brier_score_loss(self.y_true, self.y_prob)
+        # losses = np.subtract(self.y_true, self.y_prob) ** 2
+        # brier_score = losses.sum() / len(self.y_true)
+        # return brier_score
