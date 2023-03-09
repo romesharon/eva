@@ -18,7 +18,7 @@ class Eva:
             "auc_metric": AUCMetric(y_true, y_pred_,y_prob,  sensitivity),
             "mcc_metric": MCCMetric(y_true, y_pred_, y_prob, sensitivity),
             "mse_metric": MSEMetric(y_true, y_pred_, y_prob, sensitivity),
-            "brier_metric": BrierMetric(y_true, y_pred_, y_prob, sensitivity),
+            "brier_metric": BrierMetric(y_true, y_pred_, y_prob, sensitivity)
         }
 
     def evaluate(self):
