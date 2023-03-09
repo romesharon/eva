@@ -118,7 +118,10 @@ class AUCMetric(AbstractMetric):
         return self.threshold_calculate > self.threshold.get(self.sensitivity)
 
     def calculate(self) -> float:
-        return roc_auc_score(self.y_true, self.y_pred, multi_class='ovr')
+        try:
+            return roc_auc_score(self.y_true, self.y_pred, multi_class='ovr')
+        except:
+            pass
 
     def suggestion_plot(self):
         fpr, tpr, _ = metrics.roc_curve(self.y_true, self.y_prob)
