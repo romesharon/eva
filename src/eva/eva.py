@@ -11,13 +11,13 @@ class Eva:
                  y_prob=None, sensitivity: Sensitivity = Sensitivity.MEDIUM):
         self.y_pred_test = y_pred_
         self.metrics = {
-            # "precision_metric": PrecisionMetric(y_true, y_pred_,y_prob,sensitivity),
-            # "recall_metric": RecallMetric(y_true, y_pred_, y_prob, sensitivity),
-            # "accuracy_metric": AccuracyMetric(y_true, y_pred_, y_prob, sensitivity),
-            # "f1_metric": F1Metric(y_true, y_pred_, y_prob, sensitivity),
-            # "auc_metric": AUCMetric(y_true, y_pred_,y_prob,  sensitivity),
-            # "mcc_metric": MCCMetric(y_true, y_pred_, y_prob, sensitivity),
-            # "mse_metric": MSEMetric(y_true, y_pred_, y_prob, sensitivity),
+            "precision_metric": PrecisionMetric(y_true, y_pred_,y_prob,sensitivity),
+            "recall_metric": RecallMetric(y_true, y_pred_, y_prob, sensitivity),
+            "accuracy_metric": AccuracyMetric(y_true, y_pred_, y_prob, sensitivity),
+            "f1_metric": F1Metric(y_true, y_pred_, y_prob, sensitivity),
+            "auc_metric": AUCMetric(y_true, y_pred_,y_prob,  sensitivity),
+            "mcc_metric": MCCMetric(y_true, y_pred_, y_prob, sensitivity),
+            "mse_metric": MSEMetric(y_true, y_pred_, y_prob, sensitivity),
             "brier_metric": BrierMetric(y_true, y_pred_, y_prob, sensitivity),
         }
 
