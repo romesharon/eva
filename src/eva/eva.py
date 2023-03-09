@@ -23,8 +23,6 @@ class Eva:
 
     def evaluate(self):
         for metric in self.metrics.values():
-            print(f"The metric {metric.name} not perform well, metric value: {metric.calculate()}")
-
             if not metric.is_perform_well():
                 print(f"The metric {metric.name} not perform well, metric value: {metric.calculate()}")
                 print(metric.description)
