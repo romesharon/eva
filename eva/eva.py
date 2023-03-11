@@ -3,8 +3,8 @@ from typing import Dict
 from numpy import ndarray
 from scipy.stats import ttest_ind
 
-from src.eva.constants import Sensitivity
-from src.eva.metrics import PrecisionMetric, RecallMetric, AccuracyMetric, F1Metric, AUCMetric, MCCMetric, MSEMetric, \
+from eva.constants import Sensitivity
+from eva.metrics import PrecisionMetric, RecallMetric, AccuracyMetric, F1Metric, AUCMetric, MCCMetric, MSEMetric, \
     BrierMetric
 
 

@@ -5,8 +5,8 @@ from sklearn import metrics
 from sklearn.metrics import precision_score, recall_score, confusion_matrix, ConfusionMatrixDisplay, accuracy_score, \
     f1_score, roc_auc_score, mean_squared_error, PrecisionRecallDisplay, brier_score_loss
 
-from src.eva.constants import Sensitivity
-from src.eva.metrics.abstract_metric import AbstractMetric
+from eva.constants import Sensitivity
+from eva.metrics.abstract_metric import AbstractMetric
 
 
 class AccuracyMetric(AbstractMetric):
