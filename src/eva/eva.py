@@ -23,13 +23,13 @@ class Eva:
 
     def evaluate(self):
         for metric in self.metrics.values():
-            print(f"Meric Name:{metric.name}")
+            print(f"Meric Name:{metric.name}, value: {metric.calculate()}")
             if not metric.is_perform_well():
-                print(f"The metric {metric.name} not perform well, metric value: {metric.calculate()}")
+                print(f"The metric {metric.name} not perform well")
                 print(metric.description)
                 print(metric.suggestion)
                 metric.suggestion_plot()
-                print("=====================================================")
+            print("=====================================================")
 
     def check_overfitting(self, metrics=['accuracy'], tol=0.05, alpha=0.05, summary=True):
         """

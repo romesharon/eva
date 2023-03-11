@@ -13,8 +13,9 @@ class AccuracyMetric(AbstractMetric):
     name = "accuracy"
     threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
     description = "Accuracy calculates the proportion of correct predictions out of all the predictions made by the " \
-                  "model "
-    suggestion = "Try to use a more complex model or to add more data to the training set"
+                  "model."
+    suggestion = "Try to use a more complex model or to add more data to the training set, in addition, you can try " \
+                 "to tune your hyperparametrs in order to get a better performance. "
 
     def calculate(self) -> float:
         return accuracy_score(self.y_true, self.y_pred)
@@ -29,9 +30,11 @@ class AccuracyMetric(AbstractMetric):
 class PrecisionMetric(AbstractMetric):
     name = "precision"
     threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
-    description = "Precision measures how many observations predicted as positive are in fact positive"
-    suggestion = "Try to adjust the threshold for classifying positive cases, to make the model more conservative or " \
-                 "liberal"
+    description = "Precision measures how many observations predicted as positive are in fact positive."
+    suggestion = "Try to adjust the decision threshold of your model to improve the precision score of your binary " \
+                 "classification task. Lowering the threshold can increase the number of true positives but may also " \
+                 "increase false positives, while raising the threshold can decrease false positives but may also " \
+                 "decrease true positives "
 
     def calculate(self) -> float:
         return precision_score(self.y_true, self.y_pred)
@@ -46,18 +49,17 @@ class PrecisionMetric(AbstractMetric):
 class RecallMetric(AbstractMetric):
     name = "recall"
     threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
-    description = "recall calculates the proportion of true positive predictions out of all the actual positive instances"
-    suggestion = "Try to adjust the threshold for classifying positive cases, to make the model more conservative or " \
-                 "liberal"
+    description = "Recall calculates the proportion of true positive predictions out of all the actual positive " \
+                  "instances."
+    suggestion = "Try to increase the size of your dataset or apply data augmentation techniques. Increasing the size " \
+                 "of your dataset can provide more examples of the positive class, which can improve the model's " \
+                 "ability to identify true positives. "
 
     def calculate(self) -> float:
         return recall_score(self.y_true, self.y_pred)
 
     def suggestion_plot(self):
-        display = PrecisionRecallDisplay.from_predictions(self.y_true, self.y_pred)
-        display.plot()
-
-        _ = display.ax_.set_title("Binary classifcation Precision-Recall curve")
+        pass
 
 
 class F1Metric(AbstractMetric):
@@ -65,7 +67,8 @@ class F1Metric(AbstractMetric):
     threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
     description = "F1 score is an harmonic mean of precision and recall. It is commonly used when the dataset is " \
                   "imbalanced. "
-    suggestion = "Try to use oversampling or undersampling techniques to balance the dataset"
+    suggestion = "Try to balance precision and recall to improve F1 score by adjusting the decision threshold of your " \
+                 "model or using algorithms that are specifically designed to optimize the F1 score. "
 
     def calculate(self) -> float:
         return f1_score(self.y_true, self.y_pred)
@@ -87,8 +90,9 @@ class AUCMetric(AbstractMetric):
                   "equivalent to random guessing. "
     threshold = {Sensitivity.LOW: 0.55, Sensitivity.MEDIUM: 0.5, Sensitivity.HIGH: 0.45}
 
-    suggestion = "Try to use a different algorithm or to add more data to the training set, in addition, you can try " \
-                 "to adjust the model threshold "
+    suggestion = "Try to use algorithms that directly optimize AUC to improve the AUC metric of your binary " \
+                 "classification task. The ROC-AUC maximization algorithm is one such approach that can directly " \
+                 "optimize AUC metric score. "
 
     @property
     def threshold_calculate(self) -> float:
@@ -144,8 +148,9 @@ class MCCMetric(AbstractMetric):
                   "into account true positives, true negatives, false positives, and false negatives and it is " \
                   "commonly used when the dataset is imbalanced. A high value for MCC (close to 1) indicates good " \
                   "performance, while a low value (close to 0 or below) indicates poor performance. "
-    suggestion = "Try adjusting the threshold of the classifier or consider modifying the " \
-                 "feature set."
+    suggestion = "Try to use more complex models like neural networks or gradient boosting to improve the Mean " \
+                 "Squared Error (MSE) metric. These models can capture complex nonlinear relationships in the data " \
+                 "and improve predictive accuracy. "
 
     def suggestion_plot(self):
         pass
@@ -161,8 +166,9 @@ class MSEMetric(AbstractMetric):
     name = "Mean Squared Error (MSE)"
     description = "Mean Squared Error (MSE) is a popular regression metric which measures the average squared " \
                   "difference between the true and predicted values. "
-    suggestion = "Lower the Mean Squared Error (MSE) value by tuning model hyperparameters or adjusting the training " \
-                 "data."
+    suggestion = "Try to use more complex models like neural networks or gradient boosting to improve the Mean " \
+                 "Squared Error (MSE) metric. These models can capture complex nonlinear relationships in the data " \
+                 "and improve predictive accuracy. "
 
     @property
     def threshold(self) -> float:
@@ -184,8 +190,9 @@ class BrierMetric(AbstractMetric):
     description = "Brier score is used to check the goodness of a predicted probability " \
                   "score. This is very similar to the mean squared error, but only applied for prediction probability " \
                   "scores, whose values range between 0 and 1. "
-    suggestion = "Try adjusting the model's hyperparameters, such as the regularization strength, " \
-                 "or using a different algorithm that is better suited to the data, increasing the amount of data or improving the quality of the input features may also help to improve the model's performance. Finally, ensemble methods, such as bagging or boosting, could be used to combine multiple models and improve the overall performance."
+    suggestion = "Try to adjust the model's hyperparameters, such as the regularization strength, or to use a " \
+                 "different algorithm that is better suited to the data, in addtion, try to increase the amount of " \
+                 "data or improve the quality of the input features may also help to improve the model's performance. "
     threshold = {Sensitivity.LOW: 0.18, Sensitivity.MEDIUM: 0.15, Sensitivity.HIGH: 0.1}
 
     def suggestion_plot(self):

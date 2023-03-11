@@ -38,7 +38,7 @@ y_true = np.random.randint(0, 2, size=1000)
 # Simulate y_pred for a bad model with 70% accuracy
 y_pred = []
 for i in range(len(y_true)):
-    if np.random.rand() < 0.9:
+    if np.random.rand() < 0.5:
         y_pred.append(y_true[i])
     else:
         y_pred.append(1 - y_true[i])
