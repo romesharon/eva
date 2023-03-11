@@ -6,7 +6,7 @@ setup(
     description='An evaluation package',
     author='Rom Sharon and Meni Shakarov',
     license='BSD 2-clause',
-    packages=['src'],
+    packages=['eva'],
     install_requires=['cycler==0.11.0',
                     'joblib==1.1.1',
                     'kiwisolver==1.3.1',
