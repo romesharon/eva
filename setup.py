@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='eva_rom_meni',
-    version='0.1.0',
+    name='eva_',
+    version='0.0.1',
     description='An evaluation package',
     author='Rom Sharon and Meni Shakarov',
     license='BSD 2-clause',
