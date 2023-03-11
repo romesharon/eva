@@ -41,7 +41,7 @@ class PrecisionMetric(AbstractMetric):
 
     def suggestion_plot(self):
         display = PrecisionRecallDisplay.from_predictions(self.y_true, self.y_pred)
-        display.plot()
+        # display.plot()
         plt.show()
 
 
