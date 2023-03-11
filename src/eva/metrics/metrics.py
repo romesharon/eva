@@ -10,7 +10,7 @@ from src.eva.metrics.abstract_metric import AbstractMetric
 
 
 class AccuracyMetric(AbstractMetric):
-    name = "accuracy"
+    name = "Accuracy"
     threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
     description = "Accuracy calculates the proportion of correct predictions out of all the predictions made by the " \
                   "model."
@@ -28,7 +28,7 @@ class AccuracyMetric(AbstractMetric):
 
 
 class PrecisionMetric(AbstractMetric):
-    name = "precision"
+    name = "Precision"
     threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
     description = "Precision measures how many observations predicted as positive are in fact positive."
     suggestion = "Try to adjust the decision threshold of your model to improve the precision score of your binary " \
@@ -47,7 +47,7 @@ class PrecisionMetric(AbstractMetric):
 
 
 class RecallMetric(AbstractMetric):
-    name = "recall"
+    name = "Recall"
     threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
     description = "Recall calculates the proportion of true positive predictions out of all the actual positive " \
                   "instances."
@@ -203,6 +203,3 @@ class BrierMetric(AbstractMetric):
 
     def calculate(self) -> float:
         return brier_score_loss(self.y_true, self.y_prob)
-        # losses = np.subtract(self.y_true, self.y_prob) ** 2
-        # brier_score = losses.sum() / len(self.y_true)
-        # return brier_score

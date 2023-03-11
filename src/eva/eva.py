@@ -1,3 +1,5 @@
+from typing import Dict
+
 from numpy import ndarray
 from scipy.stats import ttest_ind
 
@@ -21,15 +23,19 @@ class Eva:
             "auc_metric": AUCMetric(y_true, y_pred, y_prob, sensitivity)
         }
 
-    def evaluate(self):
+    def evaluate(self) -> Dict[str, float]:
+        not_perform_well_metrics = {}
         for metric in self.metrics.values():
-            print(f"Meric Name:{metric.name}, value: {metric.calculate()}")
+            value = metric.calculate()
+            print(f"Meric Name:{metric.name}, value: {value}")
             if not metric.is_perform_well():
+                not_perform_well_metrics[metric.name] = value
                 print(f"The metric {metric.name} not perform well")
                 print(metric.description)
                 print(metric.suggestion)
                 metric.suggestion_plot()
             print("=====================================================")
+        return not_perform_well_metrics
 
     def check_overfitting(self, metrics=['accuracy'], tol=0.05, alpha=0.05, summary=True):
         """
