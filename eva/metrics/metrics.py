@@ -42,8 +42,7 @@ class PrecisionMetric(AbstractMetric):
     def suggestion_plot(self):
         display = PrecisionRecallDisplay.from_predictions(self.y_true, self.y_pred)
         display.plot()
-
-        _ = display.ax_.set_title("Binary classifcation Precision-Recall curve")
+        plt.show()
 
 
 class RecallMetric(AbstractMetric):
@@ -80,6 +79,7 @@ class F1Metric(AbstractMetric):
         plt.title('F1 score per class')
         plt.xlabel('Class')
         plt.ylabel('F1 score')
+        plt.plot()
         plt.show()
 
 
