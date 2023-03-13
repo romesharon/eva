@@ -96,26 +96,12 @@ class AUCMetric(AbstractMetric):
 
     @property
     def threshold_calculate(self) -> float:
-        def perf_measure(y_actual, y_hat):
-            TP = 0
-            FP = 0
-            TN = 0
-            FN = 0
+        CM = confusion_matrix(self.y_true, self.y_pred)
 
-            for i in range(len(y_hat)):
-                if y_actual[i] == y_hat[i] == 1:
-                    TP += 1
-                if y_hat[i] == 1 and y_actual[i] != y_hat[i]:
-                    FP += 1
-                if y_actual[i] == y_hat[i] == 0:
-                    TN += 1
-                if y_hat[i] == 0 and y_actual[i] != y_hat[i]:
-                    FN += 1
-
-            return (TP, FP, TN, FN)
-
-
-        TP, FP, TN, FN = perf_measure(self.y_true, self.y_pred)
+        TN = CM[0][0]
+        FN = CM[1][0]
+        TP = CM[1][1]
+        FP = CM[0][1]
         print("TP " + TP)
         print("FP " + FP)
         print("TN " + TN)
