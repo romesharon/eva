@@ -96,25 +96,30 @@ class AUCMetric(AbstractMetric):
 
     @property
     def threshold_calculate(self) -> float:
-        def perf_measure(y_actuals, y_hats):
+        def perf_measure(y_actual, y_hat):
             TP = 0
             FP = 0
             TN = 0
             FN = 0
 
-            for y_actual, y_hat in zip(y_actuals, y_hats):
-                if y_actual == y_hat == 1:
+            for i in range(len(y_hat)):
+                if y_actual[i] == y_hat[i] == 1:
                     TP += 1
-                if y_hat == 1 and y_actual != y_hat:
+                if y_hat[i] == 1 and y_actual[i] != y_hat[i]:
                     FP += 1
-                if y_actual == y_hat == 0:
+                if y_actual[i] == y_hat[i] == 0:
                     TN += 1
-                if y_hat == 0 and y_actual != y_hat:
+                if y_hat[i] == 0 and y_actual[i] != y_hat[i]:
                     FN += 1
 
-            return TP, FP, TN, FN
+            return (TP, FP, TN, FN)
+
 
         TP, FP, TN, FN = perf_measure(self.y_true, self.y_pred)
+        print("TP " + TP)
+        print("FP " + FP)
+        print("TN " + TN)
+        print("FN " + FN  )
         youdens_j = (TP / (TP + FN)) + (TN / (TN + FP)) - 1
 
         return youdens_j
