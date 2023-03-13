@@ -11,7 +11,7 @@ from eva.metrics.abstract_metric import AbstractMetric
 
 class AccuracyMetric(AbstractMetric):
     name = "Accuracy"
-    threshold = {Sensitivity.LOW: 0.85, Sensitivity.MEDIUM: 0.9, Sensitivity.HIGH: 0.95}
+    threshold = {Sensitivity.LOW: 0.8, Sensitivity.MEDIUM: 0.85, Sensitivity.HIGH: 0.9}
     description = "Accuracy calculates the proportion of correct predictions out of all the predictions made by the " \
                   "model."
     suggestion = "Try to use a more complex model or to add more data to the training set, in addition, you can try " \

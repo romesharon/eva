@@ -19,7 +19,8 @@ setup(
                     'scipy==1.6.0',
                     'six==1.16.0',
                     'threadpoolctl==3.1.0',
-                    "jedi>=0.16"
+                    "jedi>=0.16",
+                    "pandas"
                       ],
 
     classifiers=[
