@@ -24,18 +24,18 @@ class Eva:
         }
 
     def evaluate(self) -> Dict[str, float]:
-        not_perform_well_metrics = {}
+        metrics_score = {}
         for metric in self.metrics.values():
             value = metric.calculate()
+            metrics_score[metric.name] = value
             print(f"Meric Name:{metric.name}, value: {value}")
             if not metric.is_perform_well():
-                not_perform_well_metrics[metric.name] = value
                 print(f"The metric {metric.name} not perform well")
                 print(metric.description)
                 print(metric.suggestion)
                 metric.suggestion_plot()
             print("=====================================================")
-        return not_perform_well_metrics
+        return metrics_score
 
     def check_overfitting(self, metrics=['accuracy'], tol=0.05, alpha=0.05, summary=True):
         """
