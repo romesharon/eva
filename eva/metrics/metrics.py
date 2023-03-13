@@ -96,16 +96,8 @@ class AUCMetric(AbstractMetric):
 
     @property
     def threshold_calculate(self) -> float:
-        CM = confusion_matrix(self.y_true, self.y_pred)
+        TN, FP, FN, TP = confusion_matrix(self.y_true, self.y_pred).ravel()
 
-        TN = CM[0][0]
-        FN = CM[1][0]
-        TP = CM[1][1]
-        FP = CM[0][1]
-        print("TP " + TP)
-        print("FP " + FP)
-        print("TN " + TN)
-        print("FN " + FN  )
         youdens_j = (TP / (TP + FN)) + (TN / (TN + FP)) - 1
 
         return youdens_j
